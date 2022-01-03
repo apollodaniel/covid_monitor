@@ -1,8 +1,9 @@
-import 'package:covid_monitor/Global.dart';
+import 'package:covid_monitor/Helper.dart';
+import 'package:covid_monitor/model/Global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'Country.dart';
+import 'model/Country.dart';
 import 'package:intl/intl.dart';
 
 class HomeTab extends StatefulWidget {
@@ -26,43 +27,23 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCountriesCovidInfo();
   }
 
   getCountriesCovidInfo() async{
-    http.Response response = await http.get(Uri.parse("https://api.covid19api.com/summary"));
-    if(response.statusCode == 200){
-      Map<String, dynamic> responseMap = await json.decode(response.body);
-      List<Country> countries = <Country>[];
-      for(var country in responseMap["Countries"]){
-        countries.add(Country.fromMap(country));
-      }
-
-      setState(() {
-        world = Global.fromMap(responseMap["Global"]);
-      });
-
-      for(Country country in countries){
-        if(country.countryCode == myLocale.countryCode){
-          setState(() {
-            currentCountry = country;
-            currentCountryFlagDir = "assets/images/country_flags/${country.countryCode.toLowerCase()}.png";
-          });
-        }
-      }
-
-    }else{
-      getCountriesCovidInfo();
-    }
+    Map<String, dynamic> result = await Helper.getCountriesList(country_code: myLocale.countryCode);
+    setState(() {
+      currentCountry = result["country"];
+      world = result["global"];
+      currentCountryFlagDir = "assets/images/country_flags/${currentCountry.countryCode.toLowerCase()}.png";
+    });
   }
 
 
   @override
   Widget build(BuildContext context) {
     myLocale = Localizations.localeOf(context);
-    print(myLocale.languageCode);
-    print(myLocale.toLanguageTag());
-    nf = NumberFormat.compact(locale: myLocale.languageCode);
+    nf = Helper.getNumberFormat(myLocale);
+    getCountriesCovidInfo();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
