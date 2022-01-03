@@ -16,19 +16,19 @@ class _AllCountriesTabState extends State<AllCountriesTab> {
   late NumberFormat nf;
   late Locale myLocale;
 
-  List<Widget> all_countries_card = [];
+  List<Widget> allCountriesCard = [];
 
   _createCountryCard(Country country){
 
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(country.country),
             Padding(
-              padding: EdgeInsets.only(bottom: 8,top: 8),
+              padding: const EdgeInsets.only(bottom: 8,top: 8),
               child: Text("Confirmados: ${nf.format(country.NewConfirmed)}\nMortos: ${nf.format(country.NewDeaths)}"),
             ),
             Image.asset("assets/images/country_flags/${country.countryCode.toLowerCase()}.png", width: 90,)
@@ -52,14 +52,14 @@ class _AllCountriesTabState extends State<AllCountriesTab> {
 
   _getAllCountriesInfo() async{
     List<Country> countries = await Helper.getCountriesList();
-    List<Widget> countries_card = [];
+    List<Widget> countriesCard = [];
 
     for(Country country in countries){
-      countries_card.add(_createCountryCard(country));
+      countriesCard.add(_createCountryCard(country));
     }
 
     setState(() {
-      all_countries_card = countries_card;
+      allCountriesCard = countriesCard;
     });
   }
 
@@ -70,7 +70,7 @@ class _AllCountriesTabState extends State<AllCountriesTab> {
     _getAllCountriesInfo();
     return GridView.count(
       crossAxisCount: 2,
-      children: all_countries_card,
+      children: allCountriesCard,
     );
   }
 }

@@ -18,7 +18,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
 
   bool isLightTheme = true;
-  Icon currentThemeModeIcon = Icon(Icons.dark_mode);
+  Icon currentThemeModeIcon = const Icon(Icons.dark_mode);
 
   final _currentThemeShKey = "current_theme";
 
@@ -37,17 +37,17 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Covid monitor"),
+        title: const Text("Covid monitor"),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 16),
             child: IconButton(onPressed: () {changeTheme();}, icon: currentThemeModeIcon),
           )
         ],
         bottom: TabBar(
           controller: _tabController,
           indicatorSize: TabBarIndicatorSize.label,
-          tabs: [
+          tabs: const [
             Tab(
               text: "Home",
               icon: Icon(Icons.home),
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           HomeTab(),
           AllCountriesTab()
         ],
@@ -76,12 +76,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     if(_isLightTheme){
       MyApp.of(context)?.changeTheme(ThemeMode.light);
       setState(() {
-        currentThemeModeIcon = Icon(Icons.dark_mode);
+        currentThemeModeIcon = const Icon(Icons.dark_mode);
       });
     }else{
       MyApp.of(context)?.changeTheme(ThemeMode.dark);
       setState(() {
-        currentThemeModeIcon = Icon(Icons.light_mode);
+        currentThemeModeIcon = const Icon(Icons.light_mode);
       });
     }
   }
@@ -92,17 +92,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       MyApp.of(context)?.changeTheme(ThemeMode.dark);
       isLightTheme = false;
       setState(() {
-        currentThemeModeIcon = Icon(Icons.light_mode);
+        currentThemeModeIcon = const Icon(Icons.light_mode);
       });
     }else{
       MyApp.of(context)?.changeTheme(ThemeMode.light);
       isLightTheme = true;
       setState(() {
-        currentThemeModeIcon = Icon(Icons.dark_mode);
+        currentThemeModeIcon = const Icon(Icons.dark_mode);
       });
     }
-
-    print(await _sharedPreferences.setBool(_currentThemeShKey, isLightTheme));
+    await _sharedPreferences.setBool(_currentThemeShKey, isLightTheme);
   }
 
 

@@ -2,13 +2,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyHttpOverrides extends HttpOverrides{
@@ -38,15 +37,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(),
+      home: const Home(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          colorScheme:  ColorScheme.light().copyWith(primary: Colors.purple, secondary: Colors.white),
-      accentColor: Colors.white),
+          colorScheme: const ColorScheme.light().copyWith(primary: Colors.purple, secondary: Colors.white).copyWith(secondary: Colors.white)),
       themeMode: _themeMode,
       darkTheme: ThemeData.dark().copyWith(
-        colorScheme: ColorScheme.light().copyWith(primary: Colors.purple, secondary: Colors.white),
-          accentColor: Colors.white
+        colorScheme: const ColorScheme.light().copyWith(primary: Colors.purple, secondary: Colors.white).copyWith(secondary: Colors.white)
       ),
     );
   }
