@@ -1,5 +1,6 @@
 
 
+import 'package:covid_monitor/AllCountriesTab.dart';
 import 'package:covid_monitor/HomeTab.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,7 +63,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         controller: _tabController,
         children: [
           HomeTab(),
-          Text("All countries")
+          AllCountriesTab()
         ],
       )
     );
