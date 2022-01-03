@@ -1,4 +1,4 @@
-# covid_monitor
+# Covid Monitor
 
 CovidMonitor app
 
